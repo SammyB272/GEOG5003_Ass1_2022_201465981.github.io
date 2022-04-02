@@ -13,7 +13,6 @@ import operator
 import matplotlib.pyplot
 
 
-
 """Create an empty list called with the variable name agents"""
 agents = []
 
