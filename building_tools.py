@@ -7,13 +7,23 @@ Created on Sat Mar 26 14:45:26 2022
 
 
 """Imports the following modules to be used in the code - random, operator,
-matplotlib.pyplot"""
+matplotlib.pyplot, time"""
 import random
 import operator
 import matplotlib.pyplot
+import time
+
+"""Start the timer for the code"""
+start = time.process_time()
+
+"""Create a function to run the pythagorus' theorum code on a pair of agents.
+This unzips the columns within a list meaning only the first dimension of the
+list need be selected"""
+def distance_between(agents_row_a, agents_row_b):
+    return (((agents_row_a[0] - agents_row_b[0])**2) + ((agents_row_a[1] - agents_row_b[1])**2))**0.5
 
 """Create a new variable to control the amount of agents used"""
-number_of_agents = 10
+number_of_agents = 3
 
 """Create a new variable to control the amount of iterations within the for loop 
 to move the agents"""
@@ -21,7 +31,6 @@ number_of_iterations = 100
 
 """Create an empty list called with the variable name agents"""
 agents = []
-
 
 """Populate the agents list by appending random integers between 0 and 100
 to the amount specified within the number_of_agents variable by using a for
@@ -54,20 +63,13 @@ function to choose the second (or easterly) variable in each column in the list"
 print(max(agents, key=operator.itemgetter(1)))
 
 
+"""Call the distance_between function iterating through every coodinate within
+the agents list, and print the answer"""
+for agents_row_a in agents:
+    for agents_row_b in agents:
+        distance = distance_between(agents_row_a, agents_row_b) 
+        print(distance)
 
-"""(Pythagoras Code Temporarily Blocked for Practical) Perform Pythagorus 
-theorem to calculate the straight line distance 
-between the yx0 and the yx1 coordinate variables
-y_axis_calulation = (agents[0][0] - agents[1][0]) ** 2
-x_axis_calcualtion = (agents[0][1] - agents[1][1]) ** 2
-
-sum_of_axis_calculations = (y_axis_calulation + x_axis_calcualtion)
-
-hypotenuse = sum_of_axis_calculations ** 0.5
-
-Print the straight line distance between the yx0 and yx1 coordinate variables,
-to check answer on calulator
-print(hypotenuse)"""
 
 """Create a graph with a X and Y axis ranging from 0 to 100"""
 matplotlib.pyplot.ylim(0, 100)
@@ -82,12 +84,35 @@ for i in range(number_of_agents):
 """Display the graph and plots"""
 matplotlib.pyplot.show()
 
+"""End the timer for the code"""
+end = time.process_time()
+
+"""Print the time the code run by running the difference between the start and 
+end clock"""
+print("time = " + str(end - start))
+
+
+
 
 
 
 """Redundant Code (Archived code as the model has eveloved and stored below 
 the live code to provide a record of changes)"""
 
+"""Print the straight line distance between the yx0 and yx1 coordinate variables,
+to check answer on calulator (Now Redundant - Python Code now not in play)
+print(hypotenuse)"""
+    
+"""Perform Pythagorus' theorem to calculate the straight line distance 
+between the yx0 and the yx1 coordinate variables (Now Redundant - Replaced by
+distance_between function)
+y_axis_calulation = (agents[0][0] - agents[1][0]) ** 2
+x_axis_calcualtion = (agents[0][1] - agents[1][1]) ** 2
+
+sum_of_axis_calculations = (y_axis_calulation + x_axis_calcualtion)
+
+hypotenuse = sum_of_axis_calculations ** 0.5"""
+    
 """Plot the eaternly coordinate as red and westernly coordinate as blue. (Now
 Redundant - replaced by the for loop to plot the amount of iterations in 
 number_of_agents variable)
