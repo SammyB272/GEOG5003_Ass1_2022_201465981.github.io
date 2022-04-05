@@ -22,6 +22,15 @@ list need be selected"""
 def distance_between(agents_row_a, agents_row_b):
     return (((agents_row_a[0] - agents_row_b[0])**2) + ((agents_row_a[1] - agents_row_b[1])**2))**0.5
 
+"""Create an empty list called distance_list, used to obtain the maximum and 
+minimum distances between the variables. (Note - the distance variable created
+whilst calling the distance between function could just have easily been used
+as a list with the same purpose, thus reducing the requirement to create an 
+additional variable. However this is safer as it is unknown if the distance 
+variable as part of the core code would clash with later practical exercises
+if changed to list format.)"""
+distance_list = []
+
 """Create a new variable to control the amount of agents used"""
 number_of_agents = 3
 
@@ -56,19 +65,28 @@ for i in range(number_of_iterations):
             agents[i][1] = (agents[i][1] - 1) % 100
 
 """Prints the agents varibale to test the container works"""
-print(agents)
+print("The list of coordinates are " + str(agents))
 
 """Prints the maximum coordinate from the agents, using the operator.itemgetter
 function to choose the second (or easterly) variable in each column in the list"""
-print(max(agents, key=operator.itemgetter(1)))
+print("Most Easternly Coordinate is " + str(max(agents, key=operator.itemgetter(1))))
 
 
 """Call the distance_between function iterating through every coodinate within
-the agents list, and print the answer"""
+the agents list, and print the answer. Populate the distance_list with the 
+outcome values."""
 for agents_row_a in agents:
     for agents_row_b in agents:
         distance = distance_between(agents_row_a, agents_row_b) 
-        print(distance)
+        distance_list.append(distance)
+        print("The distances are " + str(distance))
+
+"""Find the maximum and minimum distance between the agents and print the results"""
+maximum_distance = max(distance_list)
+minimum_distance = min(distance_list)
+
+print("Maximum Distance is " + str(maximum_distance))
+print("Minimum Distance is " + str(minimum_distance))
 
 
 """Create a graph with a X and Y axis ranging from 0 to 100"""
@@ -98,6 +116,10 @@ print("time = " + str(end - start))
 
 """Redundant Code (Archived code as the model has eveloved and stored below 
 the live code to provide a record of changes)"""
+
+    
+"""Test the distance_list recall (Now Redundant - Test Successful)
+print(distance_list)"""
 
 """Print the straight line distance between the yx0 and yx1 coordinate variables,
 to check answer on calulator (Now Redundant - Python Code now not in play)
