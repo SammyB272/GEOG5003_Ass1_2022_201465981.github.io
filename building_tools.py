@@ -74,12 +74,14 @@ print("Most Easternly Coordinate is " + str(max(agents, key=operator.itemgetter(
 
 """Call the distance_between function iterating through every coodinate within
 the agents list, and print the answer. Populate the distance_list with the 
-outcome values."""
+outcome values. The 'if' statement is inlcuded to ensure there are no repeats
+of pairs of agents and also they don't test against themselves. """
 for agents_row_a in agents:
     for agents_row_b in agents:
-        distance = distance_between(agents_row_a, agents_row_b) 
-        distance_list.append(distance)
-        print("The distances are " + str(distance))
+        if agents_row_a != agents_row_b and agents_row_a < agents_row_b:
+            distance = distance_between(agents_row_a, agents_row_b) 
+            distance_list.append(distance)
+            print("The distances are " + str(distance))
 
 """Find the maximum and minimum distance between the agents and print the results"""
 maximum_distance = max(distance_list)
