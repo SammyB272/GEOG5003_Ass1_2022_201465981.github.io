@@ -6,21 +6,19 @@ Created on Sat Mar 26 14:45:26 2022
 """
 
 
-"""Imports the following modules to be used in the code - random, operator,
-matplotlib.pyplot, time"""
-import random
-import operator
+"""Imports the following modules to be used in the code - matplotlib.pyplot, 
+time. Import the agentframework module created by the user"""
 import matplotlib.pyplot
 import time
+import agentframework
 
 """Start the timer for the code"""
 start = time.process_time()
 
 """Create a function to run the pythagorus' theorum code on a pair of agents.
-This unzips the columns within a list meaning only the first dimension of the
-list need be selected"""
+The x and y coordinates are taken from the agentframework module."""
 def distance_between(agents_row_a, agents_row_b):
-    return (((agents_row_a[0] - agents_row_b[0])**2) + ((agents_row_a[1] - agents_row_b[1])**2))**0.5
+    return (((agents_row_a.getx() - agents_row_b.getx())**2) + ((agents_row_a.gety() - agents_row_b.gety())**2))**0.5
 
 """Create an empty list called distance_list, used to obtain the maximum and 
 minimum distances between the variables. (Note - the distance variable created
@@ -41,44 +39,31 @@ number_of_iterations = 100
 """Create an empty list called with the variable name agents"""
 agents = []
 
-"""Populate the agents list by appending random integers between 0 and 100
-to the amount specified within the number_of_agents variable by using a for
-loop to count the amount of iterations"""
+"""Populate the agents list by appending Agents class within the agentframework
+module to the amount specified within the number_of_agents variable by using a 
+for loop to count the amount of iterations"""
 for i in range(number_of_agents):
-    agents.append([random.randint(0,100),random.randint(0,100)])
+    agents.append(agentframework.Agent())
 
 """An embedded for loop, the top line indicates how many iterations the remainder
-of the block should loop based on the number_of_iterations variable. The embedded
-for loop to randomise all the agents movements by two coordinate places 
-after the initial coordinate allocation. Tarus code used to prevent spillage outside
-of the chart"""
+of the block should loop based on the number_of_iterations variable. The called 
+move method taken from the agentframework module"""
 for i in range(number_of_iterations):
     for i in range(number_of_agents):
-        if random.random() < 0.5:
-            agents[i][0] = (agents[i][0] + 1) % 100
-        else:
-            agents[i][0] = (agents[i][0] - 1) % 100
-        
-        if random.random() < 0.5:
-            agents[i][1] = (agents[i][1] + 1) % 100
-        else:
-            agents[i][1] = (agents[i][1] - 1) % 100
+        agents[i].move()
+
 
 """Prints the agents varibale to test the container works"""
-print("The list of coordinates are " + str(agents))
-
-"""Prints the maximum coordinate from the agents, using the operator.itemgetter
-function to choose the second (or easterly) variable in each column in the list"""
-print("Most Easternly Coordinate is " + str(max(agents, key=operator.itemgetter(1))))
-
-
+for i in range(number_of_agents):
+    print("The list of coordinates are " + str(agents[i].getx()), str(agents[i].gety()))
+    
 """Call the distance_between function iterating through every coodinate within
 the agents list, and print the answer. Populate the distance_list with the 
 outcome values. The 'if' statement is inlcuded to ensure there are no repeats
-of pairs of agents and also they don't test against themselves. """
+of pairs of agents and also they don't test against themselves."""
 for agents_row_a in agents:
     for agents_row_b in agents:
-        if agents_row_a != agents_row_b and agents_row_a < agents_row_b:
+        if agents_row_a != agents_row_b and agents_row_a._x < agents_row_b._x:
             distance = distance_between(agents_row_a, agents_row_b) 
             distance_list.append(distance)
             print("The distances are " + str(distance))
@@ -99,7 +84,7 @@ matplotlib.pyplot.xlim(0, 100)
 iterating through the for loop, the coodrinates are taken from the iteration
 container and then X and Y in turn"""
 for i in range(number_of_agents):
-    matplotlib.pyplot.scatter(agents[i][1],agents[i][0])
+    matplotlib.pyplot.scatter(agents[i].getx(),agents[i].gety())
 
 """Display the graph and plots"""
 matplotlib.pyplot.show()
@@ -119,6 +104,30 @@ print("time = " + str(end - start))
 """Redundant Code (Archived code as the model has eveloved and stored below 
 the live code to provide a record of changes)"""
 
+"""Prints the maximum coordinate from the agents, using the operator.itemgetter
+function to choose the second (or easterly) variable in each column in the list
+(Now Redundant - Unfortuantely could not figure out how to continue the print most
+ easterly funtion after importing from the agentframwork module as the list
+ charateristics of the agents seemed to change. Lots of tinkering with this line
+ but no successful results.)
+print("Most Easternly Coordinate is " + str(max(agents, key=operator.itemgetter(1))))"""    
+
+"""Create a new variable (object) from the Agent class within the agentframework
+module. (Now Redundant - created to test the agentframework module properly, 
+the test was successful)
+a = agentframework.Agent()"""
+    
+"""Print the coordinates for object a to test it is proerly working, and print
+the moved coordinates to test the move method is working. (Now Redindant - 
+the test was successfully carried out)
+print("Agent a coordinates are " + str(a.x), str(a.y))
+a.move ()
+print("Moved Agent a coordinates are " + str(a.x), str(a.y))"""
+    
+"""Test the agentframework module has properly connected to the main code page,
+by creating and printing an agent.(Now Redundant - Test was Successful)
+a = agentframework.Agent()
+print(a)"""
     
 """Test the distance_list recall (Now Redundant - Test Successful)
 print(distance_list)"""
@@ -132,9 +141,7 @@ between the yx0 and the yx1 coordinate variables (Now Redundant - Replaced by
 distance_between function)
 y_axis_calulation = (agents[0][0] - agents[1][0]) ** 2
 x_axis_calcualtion = (agents[0][1] - agents[1][1]) ** 2
-
 sum_of_axis_calculations = (y_axis_calulation + x_axis_calcualtion)
-
 hypotenuse = sum_of_axis_calculations ** 0.5"""
     
 """Plot the eaternly coordinate as red and westernly coordinate as blue. (Now
@@ -156,17 +163,14 @@ if random.random() < 0.5:
     agents[0][0] += 1
 else:
     agents[0][0] -= 1
-
 if random.random() < 0.5:
     agents[0][1] += 1
 else:
     agents[0][1] -= 1
-    
 if random.random() < 0.5:
     agents[1][0] += 1
 else:
     agents[1][0] -= 1
-
 if random.random() < 0.5:
     agents[0][1] += 1
 else:
