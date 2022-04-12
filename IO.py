@@ -63,7 +63,7 @@ outcome values. The 'if' statement is inlcuded to ensure there are no repeats
 of pairs of agents and also they don't test against themselves."""
 for agents_row_a in agents:
     for agents_row_b in agents:
-        if agents_row_a != agents_row_b and agents_row_a._x < agents_row_b._x:
+        if agents_row_a != agents_row_b and agents_row_a.getx() < agents_row_b.getx():
             distance = distance_between(agents_row_a, agents_row_b) 
             distance_list.append(distance)
             print("The distances are " + str(distance))
