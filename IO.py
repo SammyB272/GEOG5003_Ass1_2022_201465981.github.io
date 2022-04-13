@@ -71,11 +71,12 @@ for i in range(number_of_agents):
 
 """An embedded for loop, the top line indicates how many iterations the remainder
 of the block should loop based on the number_of_iterations variable. The called 
-move and eat methods taken from the agentframework module"""
+move, eat and greedy methods taken from the agentframework module"""
 for i in range(number_of_iterations):
     for i in range(number_of_agents):
         agents[i].move()
         agents[i].eat()
+        agents[i].greedy()
 
 """Prints the agents varibale to test the container works, using the __str__()
 method from the agentframework module."""
