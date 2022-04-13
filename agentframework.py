@@ -25,7 +25,8 @@ axis every time. Tarus code used to prevent spillage outside of the chart.
 
 The eat() method makes the agents eat what is in the environment, if there are
 over 10 units in the environment, it takes 10 away from the environment and 
-adds 10 to the store"""
+adds 10 to the store. The elif satement will remove the remaining value from the
+envronment if it is under 10 using the modulo function."""
 class Agent():
     def __init__(self, environment):
             self._x = random.randint(0,300)
@@ -60,4 +61,6 @@ class Agent():
         if self.environment[self._y][self._x] > 10:
             self.environment[self._y][self._x] -=10
             self._store +=10
+        elif self.environment[self._y][self._x] < 10:
+            self.environment[self._y][self._x] -=self.environment % 10
             

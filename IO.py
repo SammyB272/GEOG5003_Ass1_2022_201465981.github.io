@@ -32,7 +32,6 @@ for row in in_textfile_reader:
     for value in row:
         rowlist.append(value)
     environment.append(rowlist)
-    #print(value)
 in_textfile_csv.close()
 
 """Find and return the size of the environment."""
@@ -58,7 +57,7 @@ number_of_agents = 3
 
 """Create a new variable to control the amount of iterations within the for loop 
 to move the agents"""
-number_of_iterations = 50
+number_of_iterations = 100
 
 """Create an empty list called with the variable name agents"""
 agents = []
@@ -82,7 +81,7 @@ for i in range(number_of_iterations):
 method from the agentframework module."""
 for i in range(number_of_agents):
     print(agents[i].__str__())
-    
+ 
 """Call the distance_between function iterating through every coodinate within
 the agents list, and print the answer. Populate the distance_list with the 
 outcome values. The 'if' statement is inlcuded to ensure there are no repeats
