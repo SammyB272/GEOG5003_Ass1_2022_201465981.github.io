@@ -50,7 +50,7 @@ if changed to list format.)"""
 distance_list = []
 
 """Create a new variable to control the amount of agents used"""
-number_of_agents = 10
+number_of_agents = 3
 
 """Create a new variable to control the amount of iterations within the for loop 
 to move the agents"""
@@ -74,10 +74,9 @@ for i in range(number_of_iterations):
         agents[i].move()
         agents[i].eat()
 
-
 """Prints the agents varibale to test the container works"""
 for i in range(number_of_agents):
-    print("The list of coordinates are " + str(agents[i].getx()), str(agents[i].gety()))
+    print("The list of coordinates are " + str(agents[i].getx()), str(agents[i].gety()), str(agents[i].getstore()))
     
 """Call the distance_between function iterating through every coodinate within
 the agents list, and print the answer. Populate the distance_list with the 
@@ -85,7 +84,7 @@ outcome values. The 'if' statement is inlcuded to ensure there are no repeats
 of pairs of agents and also they don't test against themselves."""
 for agents_row_a in agents:
     for agents_row_b in agents:
-        if agents_row_a != agents_row_b and agents_row_a.getx() < agents_row_b.getx():
+        if agents_row_a != agents_row_b and agents_row_a.getx() <= agents_row_b.getx():
             distance = distance_between(agents_row_a, agents_row_b) 
             distance_list.append(distance)
             print("The distances are " + str(distance))
@@ -123,6 +122,17 @@ writer = csv.writer(write_environment, delimiter=',')
 for row in environment:
     writer.writerow(row)
 write_environment.close()
+
+"""Write the stored values as a text file using the write function, opening as
+'a' to write and append the values. Open the blank stored_values.txt. Iterate 
+through the number_of_agents and write the store value and a comma deliniation.
+Write a new line after each session to begin the new append on a new line, then 
+close the stored_values.txt."""
+write_store = open('stored_values.txt', 'a')
+for row in range(number_of_agents):
+    write_store.write(str(agents[row].getstore()) + ", ")
+write_store.write("\n")
+write_store.close()
 
 """End the timer for the code"""
 end = time.process_time()

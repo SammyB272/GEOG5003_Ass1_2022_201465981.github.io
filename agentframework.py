@@ -25,8 +25,8 @@ class Agent():
     def __init__(self, environment):
             self._x = random.randint(0,99)
             self._y = random.randint(0,99)
+            self._store = 0
             self.environment = environment
-            self.store = 0
     def getx(self):
         return self._x
     def setx(self, value):
@@ -35,6 +35,10 @@ class Agent():
         return self._y
     def sety(self, value):
         self._y = value
+    def getstore(self):
+        return self._store
+    def setstore(self, value):
+        self._store = value
     def move(self):
         if random.random() < 0.5:
             self._y = (self._y + 1) % 100
@@ -48,5 +52,5 @@ class Agent():
     def eat(self):
         if self.environment[self._y][self._x] > 10:
             self.environment[self._y][self._x] -=10
-            self.store +=10
+            self._store +=10
             
