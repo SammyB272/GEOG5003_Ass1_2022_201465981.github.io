@@ -18,9 +18,9 @@ change the values. The set() method allows the user to chnage the value of the
 object different to that assigned from __init__. 
 The move() method is created to move the agent class a place along the X and Y
 axis every time. Tarus code used to prevent spillage outside of the chart
-The eat() method makes the agents eat what is in the environment, if the environment
-has a value greater than 10, it takes 10 away from the environment and adds 10 to 
-the store"""
+The eat() method makes the agents eat what is in the environment, if there are
+over 10 units in the environment, it takes 10 away from the environment and 
+adds 10 to the store"""
 class Agent():
     def __init__(self, environment):
             self._x = random.randint(0,99)

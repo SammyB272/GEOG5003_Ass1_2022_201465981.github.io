@@ -112,9 +112,17 @@ for i in range(number_of_agents):
 """Display the graph and plots"""
 matplotlib.pyplot.show()
 
-"""Create a graph to check the in.txt environment 2D list diplays properly."""
-#matplotlib.pyplot.imshow(environment)
-#matplotlib.pyplot.show()
+"""Write the output envoronment as a text file, using the csv writer function.
+Open the blank environment_output.txt file and call the csv.writer function
+with the delimiter as a comma. Iterate and write through each row in environment
+then close the textfile. (Please note the writin text file is in float format,
+which is not optimal as it includes a .0 after each value which uses unessesay
+space. Did not figure out how to convert the values to int)."""
+write_environment = open('environment_output.txt', 'w', newline='')
+writer = csv.writer(write_environment, delimiter=',')
+for row in environment:
+    writer.writerow(row)
+write_environment.close()
 
 """End the timer for the code"""
 end = time.process_time()
@@ -131,6 +139,12 @@ print("time = " + str(end - start))
 """Redundant Code (Archived code as the model has eveloved and stored below 
 the live code to provide a record of changes)"""
 
+"""Create a graph to check the in.txt environment 2D list diplays properly. 
+(Now Redundant - both graphs environment and agents are displayed within the
+ same graph)
+matplotlib.pyplot.imshow(environment)
+matplotlib.pyplot.show()"""
+    
 """Prints the maximum coordinate from the agents, using the operator.itemgetter
 function to choose the second (or easterly) variable in each column in the list
 (Now Redundant - Unfortuantely could not figure out how to continue the print most
