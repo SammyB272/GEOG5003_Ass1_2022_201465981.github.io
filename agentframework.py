@@ -28,8 +28,8 @@ over 10 units in the environment, it takes 10 away from the environment and
 adds 10 to the store"""
 class Agent():
     def __init__(self, environment):
-            self._x = random.randint(0,99)
-            self._y = random.randint(0,99)
+            self._x = random.randint(0,300)
+            self._y = random.randint(0,300)
             self._store = 0
             self.environment = environment
     def getx(self):
@@ -48,14 +48,14 @@ class Agent():
         return("The XY Coordinate is " + str(self._x) + " " + str(self._y) + ", The store value is " + str(self._store))
     def move(self):
         if random.random() < 0.5:
-            self._y = (self._y + 1) % 100
+            self._y = (self._y + 1) % 300
         else:
-            self._y = (self._y - 1) % 100
+            self._y = (self._y - 1) % 300
         
         if random.random() < 0.5:
-            self._x = (self._x + 1) % 100
+            self._x = (self._x + 1) % 300
         else:
-            self._x = (self._x - 1) % 100
+            self._x = (self._x - 1) % 300
     def eat(self):
         if self.environment[self._y][self._x] > 10:
             self.environment[self._y][self._x] -=10

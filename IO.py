@@ -35,6 +35,10 @@ for row in in_textfile_reader:
     #print(value)
 in_textfile_csv.close()
 
+"""Find and return the size of the environment."""
+size_of_environment = len(environment)
+print("The size of the environment is " + str(size_of_environment))
+
 """Create a function to run the pythagorus' theorum code on a pair of agents.
 The x and y coordinates are taken from the agentframework module."""
 def distance_between(agents_row_a, agents_row_b):
@@ -54,7 +58,7 @@ number_of_agents = 3
 
 """Create a new variable to control the amount of iterations within the for loop 
 to move the agents"""
-number_of_iterations = 100
+number_of_iterations = 50
 
 """Create an empty list called with the variable name agents"""
 agents = []
@@ -99,8 +103,8 @@ print("Minimum Distance is " + str(minimum_distance))
 
 """Create a graph with a X and Y axis ranging from 0 to 100, and add the 
 environments raster taken from the in.txt file"""
-matplotlib.pyplot.ylim(0, 100)
-matplotlib.pyplot.xlim(0, 100)
+matplotlib.pyplot.ylim(0, 300)
+matplotlib.pyplot.xlim(0, 300)
 matplotlib.pyplot.imshow(environment)
 
 """Plot the amount of coordinates demoted by the number_of_agents variable by
