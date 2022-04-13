@@ -7,13 +7,33 @@ Created on Sat Mar 26 14:45:26 2022
 
 
 """Imports the following modules to be used in the code - matplotlib.pyplot, 
-time. Import the agentframework module created by the user"""
+time, csv. Import the agentframework module created by the user"""
 import matplotlib.pyplot
 import time
+import csv
 import agentframework
 
 """Start the timer for the code"""
 start = time.process_time()
+
+"""Read the in.txt file in csv format by using the csv reader code, by using the
+open function and starting a blank newline. Create a reader variable to use the
+csv.reader function, and convert the values to floating point. iterate through 
+the rows and values within the list to print the values. Close the in_txt after
+finishing with it to prevent versioning issues.
+Create environment list before any processing is done, and create rowlist before 
+each row is processed. Append each value to rowlist then append each row to
+environment to create a 2D list."""
+in_textfile_csv = open('in.txt', newline='')
+in_textfile_reader = csv.reader (in_textfile_csv, quoting=csv.QUOTE_NONNUMERIC)
+environment = []
+for row in in_textfile_reader:
+    rowlist = []
+    for value in row:
+        rowlist.append(value)
+    environment.append(rowlist)
+    #print(value)
+in_textfile_csv.close()
 
 """Create a function to run the pythagorus' theorum code on a pair of agents.
 The x and y coordinates are taken from the agentframework module."""
@@ -30,7 +50,7 @@ if changed to list format.)"""
 distance_list = []
 
 """Create a new variable to control the amount of agents used"""
-number_of_agents = 3
+number_of_agents = 10
 
 """Create a new variable to control the amount of iterations within the for loop 
 to move the agents"""
@@ -41,16 +61,18 @@ agents = []
 
 """Populate the agents list by appending Agents class within the agentframework
 module to the amount specified within the number_of_agents variable by using a 
-for loop to count the amount of iterations"""
+for loop to count the amount of iterations. Also link the envronment list to 
+the agents list."""
 for i in range(number_of_agents):
-    agents.append(agentframework.Agent())
+    agents.append(agentframework.Agent(environment))
 
 """An embedded for loop, the top line indicates how many iterations the remainder
 of the block should loop based on the number_of_iterations variable. The called 
-move method taken from the agentframework module"""
+move and eat methods taken from the agentframework module"""
 for i in range(number_of_iterations):
     for i in range(number_of_agents):
         agents[i].move()
+        agents[i].eat()
 
 
 """Prints the agents varibale to test the container works"""
@@ -75,10 +97,11 @@ minimum_distance = min(distance_list)
 print("Maximum Distance is " + str(maximum_distance))
 print("Minimum Distance is " + str(minimum_distance))
 
-
-"""Create a graph with a X and Y axis ranging from 0 to 100"""
+"""Create a graph with a X and Y axis ranging from 0 to 100, and add the 
+environments raster taken from the in.txt file"""
 matplotlib.pyplot.ylim(0, 100)
 matplotlib.pyplot.xlim(0, 100)
+matplotlib.pyplot.imshow(environment)
 
 """Plot the amount of coordinates demoted by the number_of_agents variable by
 iterating through the for loop, the coodrinates are taken from the iteration
@@ -88,6 +111,10 @@ for i in range(number_of_agents):
 
 """Display the graph and plots"""
 matplotlib.pyplot.show()
+
+"""Create a graph to check the in.txt environment 2D list diplays properly."""
+#matplotlib.pyplot.imshow(environment)
+#matplotlib.pyplot.show()
 
 """End the timer for the code"""
 end = time.process_time()
