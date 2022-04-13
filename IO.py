@@ -74,9 +74,10 @@ for i in range(number_of_iterations):
         agents[i].move()
         agents[i].eat()
 
-"""Prints the agents varibale to test the container works"""
+"""Prints the agents varibale to test the container works, using the __str__()
+method from the agentframework module."""
 for i in range(number_of_agents):
-    print("The list of coordinates are " + str(agents[i].getx()), str(agents[i].gety()), str(agents[i].getstore()))
+    print(agents[i].__str__())
     
 """Call the distance_between function iterating through every coodinate within
 the agents list, and print the answer. Populate the distance_list with the 
