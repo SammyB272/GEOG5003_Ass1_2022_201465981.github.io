@@ -7,10 +7,11 @@ Created on Sat Mar 26 14:45:26 2022
 
 
 """Imports the following modules to be used in the code - matplotlib.pyplot, 
-time, csv. Import the agentframework module created by the user"""
+time, csv, random. Import the agentframework module created by the user"""
 import matplotlib.pyplot
 import time
 import csv
+import random
 import agentframework
 
 """Start the timer for the code"""
@@ -38,11 +39,6 @@ in_textfile_csv.close()
 size_of_environment = len(environment)
 print("The size of the environment is " + str(size_of_environment))
 
-"""Create a function to run the pythagorus' theorum code on a pair of agents.
-The x and y coordinates are taken from the agentframework module."""
-def distance_between(agents_row_a, agents_row_b):
-    return (((agents_row_a.getx() - agents_row_b.getx())**2) + ((agents_row_a.gety() - agents_row_b.gety())**2))**0.5
-
 """Create an empty list called distance_list, used to obtain the maximum and 
 minimum distances between the variables. (Note - the distance variable created
 whilst calling the distance between function could just have easily been used
@@ -53,11 +49,14 @@ if changed to list format.)"""
 distance_list = []
 
 """Create a new variable to control the amount of agents used"""
-number_of_agents = 3
+number_of_agents = 10
 
 """Create a new variable to control the amount of iterations within the for loop 
 to move the agents"""
 number_of_iterations = 100
+
+"""Create a new variable to control the search distance of the agents"""
+neighbourhood = 20
 
 """Create an empty list called with the variable name agents"""
 agents = []
@@ -67,16 +66,27 @@ module to the amount specified within the number_of_agents variable by using a
 for loop to count the amount of iterations. Also link the envronment list to 
 the agents list."""
 for i in range(number_of_agents):
-    agents.append(agentframework.Agent(environment))
+    agents.append(agentframework.Agent(environment, agents))
 
 """An embedded for loop, the top line indicates how many iterations the remainder
-of the block should loop based on the number_of_iterations variable. The called 
-move, eat and greedy methods taken from the agentframework module"""
+of the block should loop based on the number_of_iterations variable. Shuffle the 
+aggents list after each iteration to randomise the order of the agents carrying
+out the called methods. The called move, eat, greedy and share_with_neighbours 
+methods taken from the agentframework module. (The neighbourhood value is taken 
+from the input parameter)."""
 for i in range(number_of_iterations):
     for i in range(number_of_agents):
+        random.shuffle(agents)
         agents[i].move()
         agents[i].eat()
         agents[i].greedy()
+        agents[i].share_with_neighbours(neighbourhood)
+
+"""Test print to check the agents can see each other by creating a variable called
+look agents and selecting a diffent agent from the list that the check agent, then
+calling the check_agent method against the newly created variable."""
+look_agent = agents[1]
+look_agent.check_agent()
 
 """Prints the agents varibale to test the container works, using the __str__()
 method from the agentframework module."""
@@ -86,13 +96,15 @@ for i in range(number_of_agents):
 """Call the distance_between function iterating through every coodinate within
 the agents list, and print the answer. Populate the distance_list with the 
 outcome values. The 'if' statement is inlcuded to ensure there are no repeats
-of pairs of agents and also they don't test against themselves."""
+of pairs of agents and also they don't test against themselves. (Please note, this
+could have been removed but the decision was made not to because the code block
+displays elements from the additional work in the practicals.)"""
 for agents_row_a in agents:
     for agents_row_b in agents:
         if agents_row_a != agents_row_b and agents_row_a.getx() <= agents_row_b.getx():
-            distance = distance_between(agents_row_a, agents_row_b) 
-            distance_list.append(distance)
-            print("The distances are " + str(distance))
+            print_distance = agentframework.Agent.distance_between(agents_row_a, agents_row_b) 
+            distance_list.append(print_distance)
+            print("The distances are " + str(print_distance))
 
 """Find the maximum and minimum distance between the agents and print the results"""
 maximum_distance = max(distance_list)
@@ -154,6 +166,13 @@ print("time = " + str(end - start))
 """Redundant Code (Archived code as the model has eveloved and stored below 
 the live code to provide a record of changes)"""
 
+"""Create a function to run the pythagorus' theorum code on a pair of agents.
+The x and y coordinates are taken from the agentframework module. (Now Redundnat -
+instead called as a method in the agentsframework module).
+def distance_between(agents_row_a, agents_row_b):
+    return (((agents_row_a.getx() - agents_row_b.getx())**2) + 
+            ((agents_row_a.gety() - agents_row_b.gety())**2))**0.5"""
+    
 """Create a graph to check the in.txt environment 2D list diplays properly. 
 (Now Redundant - both graphs environment and agents are displayed within the
  same graph)
@@ -163,7 +182,7 @@ matplotlib.pyplot.show()"""
 """Prints the maximum coordinate from the agents, using the operator.itemgetter
 function to choose the second (or easterly) variable in each column in the list
 (Now Redundant - Unfortuantely could not figure out how to continue the print most
- easterly funtion after importing from the agentframwork module as the list
+ easterly funtion after importing from the agentframework module as the list
  charateristics of the agents seemed to change. Lots of tinkering with this line
  but no successful results.)
 print("Most Easternly Coordinate is " + str(max(agents, key=operator.itemgetter(1))))"""    

@@ -28,15 +28,29 @@ over 10 units in the environment, it takes 10 away from the environment and
 adds 10 to the store. The elif satement will remove the remaining value from the
 envronment if it is under 10 using the modulo function.
 
-The greedy() method returns 100 units beck to the envronment and loses them from
-the store after 100 units have been consumed."""
+The greedy() method returns 20 units beck to the envronment and loses them from
+the store after 20 units have been consumed.(Please note that although the 
+instruction mentions 100 units, I chose 20 instead to reduce the impact on the
+colour ramp scale)
+
+The check_agent() method selects and agent from the list and prints it's values.
+
+The distance_between() method calcualted the straight line distance from and to
+the agents using pythagorus' theorum. 
+
+The share_with_neighbours() method which takes in the neighbourhood variable from 
+the model.py. The method loops through the agents in self.agent and for each
+iteration calls the distance_between method into a new variable. If the distance 
+is closer than the neighbourhood value then calculate the average between the
+self._store and the agent._store and distribute them evenly, else return 0."""
 
 class Agent():
-    def __init__(self, environment):
+    def __init__(self, environment, agents):
             self._x = random.randint(0,300)
             self._y = random.randint(0,300)
             self._store = 0
             self.environment = environment
+            self.agents = agents
     def getx(self):
         return self._x
     def setx(self, value):
@@ -50,7 +64,8 @@ class Agent():
     def setstore(self, value):
         self._store = value
     def __str__(self):
-        return("The XY Coordinate is " + str(self._x) + " " + str(self._y) + ", The store value is " + str(self._store))
+        return("The XY Coordinate is " + str(self._x) + " " + str(self._y) + 
+               ", The store value is " + str(self._store))
     def move(self):
         if random.random() < 0.5:
             self._y = (self._y + 1) % 300
@@ -68,7 +83,25 @@ class Agent():
         elif self.environment[self._y][self._x] < 10:
             self.environment[self._y][self._x] -=self.environment % 10
     def greedy(self):
-        if self._store > 100:
-            self.environment[self._y][self._x] +=100
-            self._store -=100
-            
+        if self._store > 20:
+            self.environment[self._y][self._x] +=20
+            self._store -=20
+    def check_agent(self):
+        check = self.agents[2]
+        print("This is the agent check, " + str(check))
+    def distance_between(self, agent):
+        return (((self.getx() - agent.getx())**2) + 
+                ((self.gety() - agent.gety())**2))**0.5
+    def share_with_neighbours(self, neighbourhood):
+        for agent in self.agents:
+            distance = self.distance_between(agent)
+            if distance != 0 and distance <= neighbourhood:
+                    share = (self.getstore() + agent.getstore()) / 2
+                    self._store = share
+                    agent._store = share
+            else: 
+                share = 0
+        for agent in self.agents:
+            if share > 0:           
+                print("The distance between the agents is " + str(distance) + 
+                      "the sharing value is " + str(share))
