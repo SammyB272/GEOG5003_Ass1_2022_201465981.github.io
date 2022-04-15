@@ -64,9 +64,12 @@ neighbourhood = 20
 """Create an empty list called with the variable name agents"""
 agents = []
 
-"""Create a new figure that is 7 by 7 inches."""
+"""Create a new figure that is 7 by 7 inches, and create the axis from 0 to 1
+in both directions."""
 fig = matplotlib.pyplot.figure(figsize=(7, 7))
+ax = fig.add_axes([0, 0, 1, 1])
 
+ax.set_autoscale_on(False)
 
 """Populate the agents list by appending Agents class within the agentframework
 module to the amount specified within the number_of_agents variable by using a 
@@ -75,19 +78,51 @@ the agents list."""
 for i in range(number_of_agents):
     agents.append(agentframework.Agent(environment, agents))
 
-"""An embedded for loop, the top line indicates how many iterations the remainder
+carry_on = True
+
+"""create a definition to clear the figure then update based on the for loops.
+An embedded for loop, the top line indicates how many iterations the remainder
 of the block should loop based on the number_of_iterations variable. Shuffle the 
 aggents list after each iteration to randomise the order of the agents carrying
 out the called methods. The called move, eat, greedy and share_with_neighbours 
 methods taken from the agentframework module. (The neighbourhood value is taken 
-from the input parameter)."""
-for i in range(number_of_iterations):
+from the input parameter).
+Create a graph with a X and Y axis ranging from 0 to 100, and add the 
+environments raster taken from the in.txt file
+Plot the amount of coordinates demoted by the number_of_agents variable by
+iterating through the for loop, the coodrinates are taken from the iteration
+container and then X and Y in turn"""
+def update(frame_number):
+    fig.clear()   
+    global carry_on
+    for i in range(number_of_iterations):
+        for i in range(number_of_agents):
+            random.shuffle(agents)
+            agents[i].move()
+            agents[i].eat()
+            agents[i].greedy()
+            agents[i].share_with_neighbours(neighbourhood)
+    if random.random() < 0.1:
+        carry_on = False
+        print("stopping condition")
     for i in range(number_of_agents):
-        random.shuffle(agents)
-        agents[i].move()
-        agents[i].eat()
-        agents[i].greedy()
-        agents[i].share_with_neighbours(neighbourhood)
+        matplotlib.pyplot.ylim(0, 300)
+        matplotlib.pyplot.xlim(0, 300)
+        matplotlib.pyplot.imshow(environment)
+        matplotlib.pyplot.scatter(agents[i].getx(),agents[i].gety())
+        #print(agents[i].getx(),agents[i].gety())
+
+def gen_function(b = [0]):
+    a = 0
+    global carry_on #Not actually needed as we're not assigning, but clearer
+    while (a < 10) & (carry_on) :
+        yield a			# Returns control and waits next call.
+        a = a + 1
+
+animation = matplotlib.animation.FuncAnimation(fig, update, frames=gen_function, repeat=False)
+
+"""Display the graph and plots"""
+matplotlib.pyplot.show()
 
 """Test print to check the agents can see each other by creating a variable called
 look agents and selecting a diffent agent from the list that the check agent, then
@@ -99,7 +134,7 @@ look_agent.check_agent()
 method from the agentframework module."""
 for i in range(number_of_agents):
     print(agents[i].__str__())
- 
+
 """Call the distance_between function iterating through every coodinate within
 the agents list, and print the answer. Populate the distance_list with the 
 outcome values. The 'if' statement is inlcuded to ensure there are no repeats
@@ -119,21 +154,6 @@ minimum_distance = min(distance_list)
 
 print("Maximum Distance is " + str(maximum_distance))
 print("Minimum Distance is " + str(minimum_distance))
-
-"""Create a graph with a X and Y axis ranging from 0 to 100, and add the 
-environments raster taken from the in.txt file"""
-matplotlib.pyplot.ylim(0, 300)
-matplotlib.pyplot.xlim(0, 300)
-matplotlib.pyplot.imshow(environment)
-
-"""Plot the amount of coordinates demoted by the number_of_agents variable by
-iterating through the for loop, the coodrinates are taken from the iteration
-container and then X and Y in turn"""
-for i in range(number_of_agents):
-    matplotlib.pyplot.scatter(agents[i].getx(),agents[i].gety())
-
-"""Display the graph and plots"""
-matplotlib.pyplot.show()
 
 """Write the output envoronment as a text file, using the csv writer function.
 Open the blank environment_output.txt file and call the csv.writer function
