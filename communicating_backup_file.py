@@ -7,12 +7,15 @@ Created on Sat Mar 26 14:45:26 2022
 
 
 """Imports the following modules to be used in the code - matplotlib.pyplot, 
-time, csv, random. Import the agentframework module created by the user"""
+time, csv, random. matplotlib.animation. Import the agentframework module 
+created by the user"""
 import matplotlib.pyplot
 import time
 import csv
 import random
+import matplotlib.animation
 import agentframework
+
 
 """Start the timer for the code"""
 start = time.process_time()
@@ -60,6 +63,9 @@ neighbourhood = 20
 
 """Create an empty list called with the variable name agents"""
 agents = []
+
+"""Create a new figure that is 7 by 7 inches."""
+
 
 """Populate the agents list by appending Agents class within the agentframework
 module to the amount specified within the number_of_agents variable by using a 
@@ -157,7 +163,6 @@ end = time.process_time()
 """Print the time the code run by running the difference between the start and 
 end clock"""
 print("time = " + str(end - start))
-
 
 
 
