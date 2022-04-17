@@ -6,16 +6,18 @@ Created on Sat Mar 26 14:45:26 2022
 """
 
 
-"""Imports the following modules to be used in the code - matplotlib.pyplot, 
-time, csv, random. matplotlib.animation. Import the agentframework module 
-created by the user"""
+"""Imports the following modules to be used in the code - tkinter, matpoltlib 
+(using TkAgg and TkInter), matplotlib.pyplot, time, csv, random, 
+matplotlib.animation. Import the agentframework module created by the user"""
+import matplotlib
+#import tkinter
+#matplotlib.use('TkAgg') 
 import matplotlib.pyplot
 import time
 import csv
 import random
 import matplotlib.animation
 import agentframework
-
 
 """Start the timer for the code"""
 start = time.process_time()
@@ -119,10 +121,23 @@ def gen_function(b = [0]):
         yield a			# Returns control and waits next call.
         a = a + 1
 
-animation = matplotlib.animation.FuncAnimation(fig, update, frames=gen_function, repeat=False)
+#def run():
+animation = matplotlib.animation.FuncAnimation(fig, update, 
+                                                   frames=gen_function, repeat=False)
+#    canvas.draw()
+    
+#root = tkinter.Tk()
+#root.wm_title("Model")
+#canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master=root)
+#canvas._tkcanvas.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
-"""Display the graph and plots"""
-matplotlib.pyplot.show()
+#menu_bar = tkinter.Menu(root)
+#root.config(menu=menu_bar)
+#model_menu = tkinter.Menu(menu_bar)
+#menu_bar.add_cascade(label="Model", menu=model_menu)
+#model_menu.add_command(label="Run model", command=run) 
+
+#tkinter.mainloop()
 
 """Test print to check the agents can see each other by creating a variable called
 look agents and selecting a diffent agent from the list that the check agent, then
@@ -192,6 +207,10 @@ print("time = " + str(end - start))
 """Redundant Code (Archived code as the model has eveloved and stored below 
 the live code to provide a record of changes)"""
 
+"""Display the graph and plots (Now Redundant - Using canvas.draw as a replacment 
+to get a GUI)
+matplotlib.pyplot.show()"""
+    
 """Create a function to run the pythagorus' theorum code on a pair of agents.
 The x and y coordinates are taken from the agentframework module. (Now Redundnat -
 instead called as a method in the agentsframework module).

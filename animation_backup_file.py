@@ -122,7 +122,7 @@ def gen_function(b = [0]):
 animation = matplotlib.animation.FuncAnimation(fig, update, frames=gen_function, repeat=False)
 
 """Display the graph and plots"""
-matplotlib.pyplot.show()
+#matplotlib.pyplot.show()
 
 """Test print to check the agents can see each other by creating a variable called
 look agents and selecting a diffent agent from the list that the check agent, then
