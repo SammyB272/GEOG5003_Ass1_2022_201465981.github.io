@@ -64,8 +64,6 @@ neighbourhood = 20
 """Create an empty list called with the variable name agents"""
 agents = []
 
-"""Create a new figure that is 7 by 7 inches."""
-
 
 """Populate the agents list by appending Agents class within the agentframework
 module to the amount specified within the number_of_agents variable by using a 
