@@ -1,8 +1,26 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Mar 26 14:45:26 2022
+Title: agentframework.py
+Created on Mon Apr 11 15:15:07 2022
+Version: 1
+Author: Student ID - 201465981
 
-@author: sam-b
+The model creates a number of agents which have several effects on the input environment,
+ in order to eat away at the environment and store the eaten properites. 
+
+- The environment file is read into the model, which contains 300 pixels worth of data.
+- The input parameters are created - number_of_agents, number_of_iterations and neighbourhood.
+- The blank agents list is created and populated using random XY coordinates within the 
+  environment from the __init__ method in the agentsframework module.
+- Calls several methods from the agentsframework module to affect the environment.
+    The move method changes the agents coordinates in small steps. 
+    The eat method scoops up 10 values from the agents' pixel in the environment and stores them. 
+    The greedy method removes values from the store and back into the environement.
+    The share_with_neighbours method allows the agents to split their stores.
+- The maximum and minimum distances are calculated and printed.
+- A graph of the environment is created and displayed, plotting the agents and 
+showing the effects of their actions.
+- The output environment and store text files are written in the directory.
 """
 
 
@@ -27,50 +45,37 @@ the rows and values within the list to print the values. Close the in_txt after
 finishing with it to prevent versioning issues.
 Create environment list before any processing is done, and create rowlist before 
 each row is processed. Append each value to rowlist then append each row to
-environment to create a 2D list."""
-in_textfile_csv = open('in.txt', newline='')
-in_textfile_reader = csv.reader (in_textfile_csv, quoting=csv.QUOTE_NONNUMERIC)
-environment = []
-for row in in_textfile_reader:
-    rowlist = []
-    for value in row:
-        rowlist.append(value)
-    environment.append(rowlist)
-in_textfile_csv.close()
+environment to create a 2D list.
+Find and return the size of the environment."""
+in_textfile_csv = open('in.txt', newline='') #open in.txt
+in_textfile_reader = csv.reader (in_textfile_csv, quoting=csv.QUOTE_NONNUMERIC) #use csv reader, convert to float
+environment = [] #create the environment variable as a blank list
+for row in in_textfile_reader: #for each row of data within the in.txt file.
+    rowlist = [] #create rowlist valiable as a blank list
+    for value in row: #for each data value in the rows
+        rowlist.append(value) #create a bunch of 1D lists
+    environment.append(rowlist) #merge into a 2D list
+in_textfile_csv.close() #close the textfile
 
-"""Find and return the size of the environment."""
-size_of_environment = len(environment)
-print("The size of the environment is " + str(size_of_environment))
+#Find size of environment to detemine some model settings (commented out as no longer needed)
+#size_of_environment = len(environment) #count the amount of rows in the environment list
+#print("The size of the environment is " + str(size_of_environment)) #test print
 
-"""Create an empty list called distance_list, used to obtain the maximum and 
-minimum distances between the variables. (Note - the distance variable created
-whilst calling the distance between function could just have easily been used
-as a list with the same purpose, thus reducing the requirement to create an 
-additional variable. However this is safer as it is unknown if the distance 
-variable as part of the core code would clash with later practical exercises
-if changed to list format.)"""
-distance_list = []
-
-"""Create a new variable to control the amount of agents used"""
-number_of_agents = 10
-
-"""Create a new variable to control the amount of iterations within the for loop 
-to move the agents"""
-number_of_iterations = 100
-
-"""Create a new variable to control the search distance of the agents"""
-neighbourhood = 20
-
-"""Create an empty list called with the variable name agents"""
-agents = []
-
+"""Create the variables and input parameters for the code"""
+#Input Parameters
+number_of_agents = 10 #control the amount of agents used
+number_of_iterations = 100 #control the number of agent actions on the environment
+neighbourhood = 20 #control the search distance of the agents
+#Model Variables
+agents = [] #An empty list to hold the agents values
+distance_list = [] #An empty list, to obtain the max and min distances between the agents
 
 """Populate the agents list by appending Agents class within the agentframework
 module to the amount specified within the number_of_agents variable by using a 
 for loop to count the amount of iterations. Also link the envronment list to 
 the agents list."""
-for i in range(number_of_agents):
-    agents.append(agentframework.Agent(environment, agents))
+for i in range(number_of_agents): #iterate through the number_of_agents parameter
+    agents.append(agentframework.Agent(environment, agents)) #add the Agent object __init__ values
 
 """An embedded for loop, the top line indicates how many iterations the remainder
 of the block should loop based on the number_of_iterations variable. Shuffle the 
@@ -78,59 +83,60 @@ aggents list after each iteration to randomise the order of the agents carrying
 out the called methods. The called move, eat, greedy and share_with_neighbours 
 methods taken from the agentframework module. (The neighbourhood value is taken 
 from the input parameter)."""
-for i in range(number_of_iterations):
-    for i in range(number_of_agents):
-        random.shuffle(agents)
-        agents[i].move()
-        agents[i].eat()
-        agents[i].greedy()
-        agents[i].share_with_neighbours(neighbourhood)
+for i in range(number_of_iterations): #controls the total amount of actions
+    for i in range(number_of_agents): #makes sure each agent does the actions
+           random.shuffle(agents) #randomising the starting agentmay affect how they interact with each other (e.g. sharing)
+           agents[i].move() #call the methods from the agentframework module
+           agents[i].eat()
+           agents[i].greedy()
+           agents[i].share_with_neighbours(neighbourhood, agents)
 
 """Test print to check the agents can see each other by creating a variable called
 look agents and selecting a diffent agent from the list that the check agent, then
 calling the check_agent method against the newly created variable."""
-look_agent = agents[1]
-look_agent.check_agent()
+# (Commented Out as used for test of code)
+#look_agent = agents[0] #make variable from the item 0 in agents list
+#look_agent.check_agent() #print if the look_agent is able to call the check_agent
 
-"""Prints the agents varibale to test the container works, using the __str__()
-method from the agentframework module."""
-for i in range(number_of_agents):
-    print(agents[i].__str__())
+"""Prints the agents varibale to return the final values after running the model, 
+using the __str__() method from the agentframework module."""
+for i in range(number_of_agents): #ensures all the agents are included
+    print(agents[i].__str__()) #prints the __str__ return
  
 """Call the distance_between function iterating through every coodinate within
 the agents list, and print the answer. Populate the distance_list with the 
 outcome values. The 'if' statement is inlcuded to ensure there are no repeats
 of pairs of agents and also they don't test against themselves. (Please note, this
 could have been removed but the decision was made not to because the code block
-displays elements from the additional work in the practicals.)"""
-for agents_row_a in agents:
-    for agents_row_b in agents:
-        if agents_row_a != agents_row_b and agents_row_a.getx() <= agents_row_b.getx():
-            print_distance = agentframework.Agent.distance_between(agents_row_a, agents_row_b) 
-            distance_list.append(print_distance)
-            print("The distances are " + str(print_distance))
+displays elements from the additional work in the practicals.)
+Find the maximum and minimum distance between the agents and print the results"""
+for agents_row_a in agents: #for the first agent
+    for agents_row_b in agents: #for the second agent
+        if agents_row_a != agents_row_b and agents_row_a.getx() <= agents_row_b.getx(): #prevent same list position and going backwards in list position
+            print_distance = agentframework.Agent.distance_between(agents_row_a, agents_row_b) #create vaireable using distance_between method
+            distance_list.append(print_distance) #append distance values to a list
+            #print("The distances are " + str(print_distance)) #Test print
 
-"""Find the maximum and minimum distance between the agents and print the results"""
-maximum_distance = max(distance_list)
+maximum_distance = max(distance_list) #get max and min values from the distance_list
 minimum_distance = min(distance_list)
 
-print("Maximum Distance is " + str(maximum_distance))
+print("Maximum Distance is " + str(maximum_distance)) #print max and min values from the distance_list
 print("Minimum Distance is " + str(minimum_distance))
 
 """Create a graph with a X and Y axis ranging from 0 to 100, and add the 
-environments raster taken from the in.txt file"""
-matplotlib.pyplot.ylim(0, 300)
-matplotlib.pyplot.xlim(0, 300)
-matplotlib.pyplot.imshow(environment)
-
-"""Plot the amount of coordinates demoted by the number_of_agents variable by
+environments raster taken from the in.txt file
+Plot the amount of coordinates demoted by the number_of_agents variable by
 iterating through the for loop, the coodrinates are taken from the iteration
-container and then X and Y in turn"""
-for i in range(number_of_agents):
-    matplotlib.pyplot.scatter(agents[i].getx(),agents[i].gety())
+container and then X and Y in turn
+Display the graph and plots"""
+matplotlib.pyplot.ylim(0, 300) #create y axis between 0 and 300
+matplotlib.pyplot.xlim(0, 300) #create x axis between 0 and 300
+matplotlib.pyplot.imshow(environment) #show the environment values
 
-"""Display the graph and plots"""
-matplotlib.pyplot.show()
+for i in range(number_of_agents): #for each agent
+    matplotlib.pyplot.scatter(agents[i].getx(),agents[i].gety()) #plot the XY coordinate
+
+matplotlib.pyplot.show() #display the chart
 
 """Write the output envoronment as a text file, using the csv writer function.
 Open the blank environment_output.txt file and call the csv.writer function
@@ -138,30 +144,26 @@ with the delimiter as a comma. Iterate and write through each row in environment
 then close the textfile. (Please note the writin text file is in float format,
 which is not optimal as it includes a .0 after each value which uses unessesay
 space. Did not figure out how to convert the values to int)."""
-write_environment = open('environment_output.txt', 'w', newline='')
-writer = csv.writer(write_environment, delimiter=',')
-for row in environment:
-    writer.writerow(row)
-write_environment.close()
+write_environment = open('environment_output.txt', 'w', newline='') #open write_environment
+writer = csv.writer(write_environment, delimiter=',') #use csv writer
+for row in environment: #call the rows in environment
+    writer.writerow(row) #write the row values in the text file
+write_environment.close() #close write_environment
 
 """Write the stored values as a text file using the write function, opening as
 'a' to write and append the values. Open the blank stored_values.txt. Iterate 
 through the number_of_agents and write the store value and a comma deliniation.
 Write a new line after each session to begin the new append on a new line, then 
 close the stored_values.txt."""
-write_store = open('stored_values.txt', 'a')
-for row in range(number_of_agents):
-    write_store.write(str(agents[row].getstore()) + ", ")
-write_store.write("\n")
-write_store.close()
+write_store = open('stored_values.txt', 'a') #open stored_values with an append function
+for row in range(number_of_agents): #for each agent
+    write_store.write(str(agents[row].getstore()) + ", ") #write the score comma seperated
+write_store.write("\n") #start newline for next append
+write_store.close() #close stored_values
 
-"""End the timer for the code"""
+"""End and print the timer for the code"""
 end = time.process_time()
-
-"""Print the time the code run by running the difference between the start and 
-end clock"""
 print("time = " + str(end - start))
-
 
 
 
