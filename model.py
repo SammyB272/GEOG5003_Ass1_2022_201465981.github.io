@@ -25,13 +25,14 @@ showing the effects of their actions.
 
 
 """Imports the following modules to be used in the code - matplotlib.pyplot, 
-time, csv, random. matplotlib.animation. Import the agentframework module 
+time, csv, random, matplotlib.animation, sys. Import the agentframework module 
 created by the user"""
 import matplotlib.pyplot
 import time
 import csv
 import random
 import matplotlib.animation
+import sys
 import agentframework
 
 
@@ -69,6 +70,10 @@ neighbourhood = 20 #control the search distance of the agents
 #Model Variables
 agents = [] #An empty list to hold the agents values
 distance_list = [] #An empty list, to obtain the max and min distances between the agents
+
+number_of_agents = int(sys.argv[1])
+number_of_iterations = int(sys.argv[2])
+neighbourhood = int(sys.argv[3])
 
 """Populate the agents list by appending Agents class within the agentframework
 module to the amount specified within the number_of_agents variable by using a 
