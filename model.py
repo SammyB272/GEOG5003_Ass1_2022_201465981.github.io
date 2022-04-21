@@ -129,8 +129,8 @@ def update(frame_number): #create the update frame_number function
             agents[i].eat()
             agents[i].greedy()
             agents[i].share_with_neighbours(neighbourhood, agents)
-    if random.random() < 0.1:
-        carry_on = False
+    if random.random() < 0.1: #a 10% chance
+        carry_on = False #make carry_on false
         #print("stopping condition") #Test print
     for i in range(number_of_agents):
         matplotlib.pyplot.ylim(0, 300) #create y axis between 0 and 300
