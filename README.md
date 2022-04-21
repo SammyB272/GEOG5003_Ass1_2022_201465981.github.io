@@ -55,7 +55,7 @@ To run the model use the instructions below:-
 - Navigate to the local directory in the cmd prompt using the cd function.
 - Type model.py and the input parameters in the cmd, there are three parameters and the entered value
   must be a whole number. They must be entered in the following order and seperated by a space, number_of_agents,
-  number_of_iterations and neighbourhood. An example user input method is 'agaent.py 10 20 30'.
+  number_of_iterations and neighbourhood. An example user input method is 'agent.py 10 20 30'.
 - Hit the enter key, to run the model and get the results.
 
 - Please note the matplotlib module may not be available to run on cmd as standard, if this error is 
