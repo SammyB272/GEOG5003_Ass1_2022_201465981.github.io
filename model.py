@@ -27,6 +27,9 @@ showing the effects of their actions.
 """Imports the following modules to be used in the code - matplotlib.pyplot, 
 time, csv, random, matplotlib.animation, sys. Import the agentframework module 
 created by the user"""
+#import matplotlib
+#import tkinter
+#matplotlib.use('TkAgg') 
 import matplotlib.pyplot
 import time
 import csv
@@ -71,7 +74,9 @@ neighbourhood = 20 #control the search distance of the agents
 agents = [] #An empty list to hold the agents values
 distance_list = [] #An empty list, to obtain the max and min distances between the agents
 
-number_of_agents = int(sys.argv[1])
+"""Input Parameters using the sys.argv function which allows user input using the 
+command line"""
+number_of_agents = int(sys.argv[1]) #the sys.argv list order is the same order as the input parameters should be entered
 number_of_iterations = int(sys.argv[2])
 neighbourhood = int(sys.argv[3])
 
@@ -82,19 +87,89 @@ the agents list."""
 for i in range(number_of_agents): #iterate through the number_of_agents parameter
     agents.append(agentframework.Agent(environment, agents)) #add the Agent object __init__ values
 
-"""An embedded for loop, the top line indicates how many iterations the remainder
+"""Create a new figure that is 7 by 7 inches, and create the axis from 0 to 1
+in both directions. Create the carry_on variable to get the animation continuing/
+stopping contidition.
+
+Define a function to clear the figure then update with fresh changes in each
+iteration based on the enbedded for loops.
+An embedded for loop, the top line indicates how many iterations the remainder
 of the block should loop based on the number_of_iterations variable. Shuffle the 
 aggents list after each iteration to randomise the order of the agents carrying
 out the called methods. The called move, eat, greedy and share_with_neighbours 
 methods taken from the agentframework module. (The neighbourhood value is taken 
-from the input parameter)."""
-for i in range(number_of_iterations): #controls the total amount of actions
-    for i in range(number_of_agents): #makes sure each agent does the actions
-           random.shuffle(agents) #randomising the starting agentmay affect how they interact with each other (e.g. sharing)
-           agents[i].move() #call the methods from the agentframework module
-           agents[i].eat()
-           agents[i].greedy()
-           agents[i].share_with_neighbours(neighbourhood, agents)
+from the input parameter).
+If a random.random return is under 0.1 then change the carry_on to false and 
+stop iterating through the frame_number function.
+Create a graph with a X and Y axis ranging from 0 to 300, and add the 
+environments raster taken from the in.txt file.
+Plot the amount of coordinates demoted by the number_of_agents variable by
+iterating through the for loop, the coodrinates are taken from the iteration
+container and then X and Y in turn.
+
+Create a function called gen_function which iterates through the animation frames.
+
+Create the animaton using the matplotlib.animation.FuncAnimation function. The
+figure is the created fig variable, then update the animation using the update
+function, the frames are the gen_function function and do not repeat after the 
+animation.
+Display the animation.
+"""
+fig = matplotlib.pyplot.figure(figsize=(7, 7)) #create the 7x7 inch fugure
+ax = fig.add_axes([0, 0, 1, 1]) #create the XY axis
+carry_on = True #whilst carry_on equals true the animation will keep running
+
+def update(frame_number): #create the update frame_number function
+    fig.clear() #clear the fugure
+    global carry_on #making the variable global allows the update to be used outside of the function
+    for i in range(number_of_iterations):#controls the total amount of actions
+        for i in range(number_of_agents):#makes sure each agent does the actions
+            random.shuffle(agents) #randomising the starting agent 
+            agents[i].move() #call the methods from the agentframework module
+            agents[i].eat()
+            agents[i].greedy()
+            agents[i].share_with_neighbours(neighbourhood, agents)
+    if random.random() < 0.1:
+        carry_on = False
+        #print("stopping condition") #Test print
+    for i in range(number_of_agents):
+        matplotlib.pyplot.ylim(0, 300) #create y axis between 0 and 300
+        matplotlib.pyplot.xlim(0, 300) #create x axis between 0 and 300
+        matplotlib.pyplot.imshow(environment)  #show the environment values
+        matplotlib.pyplot.scatter(agents[i].getx(),agents[i].gety()) #plot the XY coordinate
+        #print(agents[i].getx(),agents[i].gety()) #test print
+
+def gen_function(b = [0]): #create the gen_function function
+    a = 0 #create variable and set to 0
+    global carry_on #check carry_on is true
+    while (a < 10) & (carry_on) : #whilst a is under and carry_on
+        yield a			# Returns control and waits next call.
+        a += 1 #add 1 to a
+
+animation = matplotlib.animation.FuncAnimation(fig, update, frames=gen_function, repeat=False)
+matplotlib.pyplot.show() #display the animation
+
+"""The GUI code to make the model popup window and allow the user to choose the 
+run function. Managed to make this section mostly run good, but after completing
+the run action and even closing the GUI, the rest of the code did not finish and
+lest the command line in a suspended state. Would resolve this issue for future verions
+of the model, however the decision was made to revert to the animation that occurs
+automatically after the command line has been run."""
+#def run():
+#   animation = matplotlib.animation.FuncAnimation(fig, update, 
+#                                                   frames=gen_function, repeat=False)
+#   canvas.draw()
+    
+#root = tkinter.Tk()
+#root.wm_title("Model")
+#canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master=root)
+#canvas._tkcanvas.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
+#menu_bar = tkinter.Menu(root)
+#root.config(menu=menu_bar)
+#model_menu = tkinter.Menu(menu_bar)
+#menu_bar.add_cascade(label="Model", menu=model_menu)
+#model_menu.add_command(label="Run model", command=run) 
 
 """Test print to check the agents can see each other by creating a variable called
 look agents and selecting a diffent agent from the list that the check agent, then
@@ -127,21 +202,6 @@ minimum_distance = min(distance_list)
 
 print("Maximum Distance is " + str(maximum_distance)) #print max and min values from the distance_list
 print("Minimum Distance is " + str(minimum_distance))
-
-"""Create a graph with a X and Y axis ranging from 0 to 100, and add the 
-environments raster taken from the in.txt file
-Plot the amount of coordinates demoted by the number_of_agents variable by
-iterating through the for loop, the coodrinates are taken from the iteration
-container and then X and Y in turn
-Display the graph and plots"""
-matplotlib.pyplot.ylim(0, 300) #create y axis between 0 and 300
-matplotlib.pyplot.xlim(0, 300) #create x axis between 0 and 300
-matplotlib.pyplot.imshow(environment) #show the environment values
-
-for i in range(number_of_agents): #for each agent
-    matplotlib.pyplot.scatter(agents[i].getx(),agents[i].gety()) #plot the XY coordinate
-
-matplotlib.pyplot.show() #display the chart
 
 """Write the output envoronment as a text file, using the csv writer function.
 Open the blank environment_output.txt file and call the csv.writer function
