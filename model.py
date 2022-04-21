@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Title: agentframework.py
+Title: model.py
 Created on Mon Apr 11 15:15:07 2022
 Version: 1
 Author: Student ID - 201465981
