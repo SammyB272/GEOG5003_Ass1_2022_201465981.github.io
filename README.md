@@ -40,8 +40,8 @@ A brief decription of the agent model:-
   limit has been reached. The share_with_neighbours method allows the agents to split their stores if 
   within the neighbourhood parameter distance.
 - The maximum and minimum distances are calculated and printed.
-- A graph of the environment is created and displayed, plotting the agents and showing the effects of
-  their actions.
+- An animation of the environment is created and displayed, plotting the agents and showing the effects of
+  their actions over a number of iterations.
 - The output environment and store text files are written in the directory.
 
 
@@ -53,7 +53,10 @@ To run the model use the instructions below:-
   directory named 'environment_output.txt' and 'stored_values.txt'.
 - Open a cmd prompt on the system.
 - Navigate to the local directory in the cmd prompt using the cd function.
-- Type model.py in the cmd and hit the enter key, to run the model and get the results.
+- Type model.py and the input parameters in the cmd, there are three parameters and the entered value
+  must be a whole number. They must be entered in the following order and seperated by a space, number_of_agents,
+  number_of_iterations and neighbourhood. An example user input method is 'agaent.py 10 20 30'.
+- Hit the enter key, to run the model and get the results.
 
 - Please note the matplotlib module may not be available to run on cmd as standard, if this error is 
   encountered then there is a useful troubleshooting guide which can be accessed [here](https://pythonguides.com/no-module-named-matplotlib/#:~:text=the%20above%20topics.-,modulenotfounderror%3A%20no%20module%20named%20'matplotlib'%20pycharm,most%20probably%20it%20will%20work.)
@@ -65,8 +68,9 @@ The expected output after running the model:-
 	- the final coordinate values and sharing values for each agent.
 	- the maximum and minimum distance between the agents.
 	- the time in seconds it took for the model to run.
-- A popup figure will display which contains the environment which has been actioned by the agents,
-  and also display the final stopping place of the agents.
+- A popup animation will display which contains the environment which has been actioned by the agents,
+  and also display the final stopping place of the agents, this may loop through a number of frames
+  depending on the random generator.
 - The environment_output.txt file will be populated with the ammended environement data.
 - The stored_values.txt file will be populated with the data (this will not clear after each model runthrough).
 

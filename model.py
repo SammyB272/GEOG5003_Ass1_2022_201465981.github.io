@@ -18,8 +18,8 @@ The model creates a number of agents which have several effects on the input env
     The greedy method removes values from the store and back into the environement.
     The share_with_neighbours method allows the agents to split their stores.
 - The maximum and minimum distances are calculated and printed.
-- A graph of the environment is created and displayed, plotting the agents and 
-showing the effects of their actions.
+- An animation of the environment is created and displayed, plotting the agents 
+  and showing the effects of their actions over a number of iterations.
 - The output environment and store text files are written in the directory.
 """
 
