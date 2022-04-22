@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Title: agentframework.py
-Created on Mon Apr 11 15:15:07 2022
-Version: 1
-Author: Student ID - 201465981
-
+agentframework.py
 This code exists as a bespole module which is to be imported into the model.py 
 code. It contains one object called Agent, which has an __init__ method and 
 various additional methods for the model. It also takes in the environment and 
 agents variables from model.py, to use in some of the methods.
+
+Version: 1.0
+Created By: StudID - 201465981
 """
 
 

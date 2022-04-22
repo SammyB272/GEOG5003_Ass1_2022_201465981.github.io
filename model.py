@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Title: model.py
-Created on Mon Apr 11 15:15:07 2022
-Version: 1
-Author: Student ID - 201465981
-
+model.py
 The model creates a number of agents which have several effects on the input environment,
  in order to eat away at the environment and store the eaten properites. 
 
@@ -21,6 +17,9 @@ The model creates a number of agents which have several effects on the input env
 - An animation of the environment is created and displayed, plotting the agents 
   and showing the effects of their actions over a number of iterations.
 - The output environment and store text files are written in the directory.
+
+Version: 1
+Author: StudID - 201465981
 """
 
 
